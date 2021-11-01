@@ -1,0 +1,11 @@
+.btn-registration{
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 3px rgba(70, 190, 244, 0.2);
+    max-width: 50%;
+}
+.forms{
+    border:1px
+}
+.auth-input{
+    border-radius: 15px;
+}

@@ -1,0 +1,27 @@
+.list-group-search{
+    top:50px;
+    min-width: 200px;
+    position: absolute;
+    z-index: 100;
+}
+.navbar{
+    border-radius: 5px;
+
+}
+.navbar-nav{
+    display: flex;
+    justify-content: space-around;
+    margin-left: 20px;
+}
+.search-input{
+    border-radius: 5px;
+    font-size: 0.9rem;
+}
+.auth-btn{
+    border-radius: 5px;
+    box-shadow: 4px 4px 15px 0px rgba(34, 60, 80, 0.2);
+}
+.btn-search{
+    border-radius: 5px;
+    box-shadow: 4px 4px 15px 0px rgba(34, 60, 80, 0.2);
+}

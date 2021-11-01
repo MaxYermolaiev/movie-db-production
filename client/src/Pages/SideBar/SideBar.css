@@ -1,0 +1,7 @@
+. side-bar-text{
+    cursor: pointer;
+}
+.list-group-item{
+    cursor: pointer;
+    text-decoration: none;
+}
