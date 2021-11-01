@@ -6,7 +6,7 @@ import {Engine} from "./index";
     const [id, setId] = useState(null)
     const storeName="user";
     const {request} = new Engine();
-    //here tune data from favorite and makes all obligatory manipulations with DB
+    //here created 3 request to DB visible via wrapper in requiered commponent
      const engineRemoveFavorite=useCallback((token,movieData)=>{ return request("https://yermolaiev-movie-db.herokuapp.com/api/remove-favorite","POST",{movie: movieData},{credentials:`bearer ${token}`})},[request])
      const engineAddFavorite=useCallback((token,movieData)=>{return request("https://yermolaiev-movie-db.herokuapp.com/api/add-favorite","POST", {movie: movieData},{credentials:`bearer ${token}`})},[request])
      const engineGetFavorite=useCallback((token)=>{ return request("https://yermolaiev-movie-db.herokuapp.com/api/get-favorite","GET",null,{credentials:`bearer ${token}` })},[request])
@@ -22,8 +22,8 @@ import {Engine} from "./index";
       },[])
 /*
 When we reload page data from state will erase
- then why we dowland from local storage
-for this, to iluminate when after reload user can be logouted
+then why we downland from local storage
+for this, to illuminate when after reload user can be logouted
 */
      useEffect(()=>{
          let localStorageData = JSON.parse(localStorage.getItem(storeName));

@@ -4,6 +4,7 @@ import {Header,Auth,Registration,SideBar,GenresCategories,SearchMovies,PopularMo
 const ApiRouter = (credentials) => {
 
    if (credentials) {
+       //depend from credentials return proper routing
         return (
             <BrowserRouter>
                 <Header/>
