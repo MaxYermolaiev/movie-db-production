@@ -1,6 +1,6 @@
 export default class Validator {
     schema = {
-        email: /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/,
+        email: /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+/,
         password: /(?=.*[0-9]){6,}/g,
         phone: /^\+380[0-9]{9}$/,
         string: /[A-Za-z]{3,}/
