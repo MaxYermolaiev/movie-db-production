@@ -3,11 +3,7 @@ import {useHistory} from "react-router";
 import Wrapper from "../../Engine/Wrapper";
 import "./Header.css"
 
-
-
 const Header=(props)=>{
-
-
     const [buttons,setButtons]=useState("disabled");
     const [searchResults,setSearchResults] = useState([]);
     const [query,setQuery] = useState("");
@@ -21,15 +17,21 @@ const Header=(props)=>{
             props.engine.getBySearch(null,value)
                 .then(data => {
                     let temp=[]
-                    if (data.results.length===0){
-                        temp.push(<li className="list-group-item" key={1}><small>No data of search</small></li>)
+                        /*
+                        <div class="d-flex flex-row bd-highlight mb-3">
+  <div class="p-2 bd-highlight">Flex item 1</div>
+  <div class="p-2 bd-highlight">Flex item 2</div>
+  <div class="p-2 bd-highlight">Flex item 3</div>
+</div>
+                         */
+                    if (data.results.length===0){temp.push(<div class="p-2 bd-highlight" key={1}>No data of search</div>)
                     }else{
                         temp = data.results.map((item,index)=>{
-                            return(<li className="list-group-item" key={index}
+                            return(<div class="p-2 bd-highlight" key={index}
                                        onClick={()=>{
                                        fallingListCleaner(e)
                                        history.push(`/movie_detail/${item.id}`)
-                            }}>{item.original_title}</li>)
+                            }}>{item.original_title}</div>)
                         })
                     }
                        setSearchResults(temp)
@@ -77,9 +79,9 @@ const Header=(props)=>{
                         <form className="d-flex">
                             <input className="form-control me-sm-2 search-input" data-toggle="dropdown" type="text" placeholder="Type here" onChange={(e)=>searchHandler(e,e.target.value)}/>
                             <button className="btn btn-success my-2 my-sm-0 btn-search" type="button" disabled={buttons} onClick={buttonHandler}>Search</button>
-                                <ul className="list-group-search" id="myList">
+                            <div class="d-flex flex-column bd-highlight pos-absolute">
                                     {searchResults}
-                                </ul>
+                                </div>
                         </form>
                     </div>
                 </div>

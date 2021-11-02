@@ -1,8 +1,14 @@
-.list-group-search{
+.pos-absolute{
     top:50px;
     min-width: 200px;
     position: absolute;
     z-index: 100;
+    cursor:pointer;
+    background: #efecec;
+}
+.p-2{
+    border:1px solid #bbbbbb;
+    border-radius: 5px;
 }
 .navbar{
     border-radius: 5px;
@@ -13,9 +19,12 @@
     justify-content: space-around;
     margin-left: 20px;
 }
+.p-2 {
+    font-size: 0.8rem;
+}
 .search-input{
     border-radius: 5px;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
 }
 .auth-btn{
     border-radius: 5px;
