@@ -15,6 +15,10 @@ class ErrorBoundary extends Component {
 const ItemList = (props) => {
     const [toRender,setToRender]=useState()
     useEffect(()=>{render(props.data)},[props.data])
+    /*
+    received list from component display item list transferred to each component MovieCardSmall
+    all interaction occur in "displayitemlist", here only rendering
+     */
     const render=(data)=>{
         const transformData = data ? data.map((item, index) => {
             return (<MovieCardSmall data={item} key={index} />)}) : null;

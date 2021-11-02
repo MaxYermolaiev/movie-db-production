@@ -1,10 +1,17 @@
 export default class Validator {
+    /*regexp for testing requiered fields
+        email:email@provider.com
+        password: only digits, min length 6
+        phone: +380...with length 9
+        string:string - min length 3
+     */
     schema = {
         email: /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+/,
         password: /(?=.*[0-9]){6,}/g,
         phone: /^\+380[0-9]{9}$/,
         string: /[A-Za-z]{3,}/
     }
+    //in results will be pushed testing of inputs, if list empty ok
     #results = {}
     validateLogin = (data) => {
         if (data.length === 0) {

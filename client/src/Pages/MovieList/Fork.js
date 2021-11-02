@@ -10,7 +10,7 @@ const getBySearch=(engine)=>{return {getData:engine.getBySearch,getImage:engine.
 const getByPopular=(engine)=>{return {getData:engine.getPopularMovies,getImage:engine.getImg}}
 const getDetails=(engine)=>{return {getRecommendations:engine.getRecommendations,getData:engine.getMovieDetails,getImage:engine.getImg}}
 const getFavorite=(engine)=>{return {getData:engine.getMovieDetails,getImage:engine.getImg}}
-
+//endow all component with function from provider and put it in router
 const ShowFavorite = Wrapper(getFavorite)(FetchFavorite)
 const SearchMovies = Wrapper(getBySearch)(DisplayItems(ItemList))
 const PopularMovies = Wrapper(getByPopular)(DisplayItems(ItemList))

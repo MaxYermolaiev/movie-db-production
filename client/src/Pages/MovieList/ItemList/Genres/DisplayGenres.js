@@ -12,7 +12,7 @@ class ErrorBoundary extends Component {
 let GenresCategorie = (props) => {
     const [data, setData] = useState({data: false, loading: false, error: false})
     const history = useHistory();
-    //all time in render need only one time to updata render page
+    //all time in render need only one time to update render page, so recieve list and render it
     useEffect(() => {
         setData({data: false, loading: true, error: false})
         props.getData()

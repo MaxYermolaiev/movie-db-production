@@ -12,7 +12,8 @@ class ErrorBoundary extends Component {
 }
 
 const FetchFavorite = (props) => {
-    //if list of favorite empty display this
+    //fetch favorite from redux, and if list empty render dialog box if no transfer data to next component
+    //where data will be transformed
     if (props.movies.error) {return <ErrorPage/>}
     if (props.movies.loading) {return <Loading/>}
     if (props.movies.length === 0) {return (<div className={"container-fluid"}><div className="alert alert-primary" role="alert">Favorite list is empty please add some movie</div></div>)}

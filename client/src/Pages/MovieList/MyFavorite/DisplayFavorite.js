@@ -16,6 +16,7 @@ class ErrorBoundary extends Component {
 }
 
 const DisplayFavorite = (props) => {
+    //transform favorite list and push to render
     const [toRender, setToRender] = useState([]);
     const history = useHistory()
     useEffect(() => renderItem(props.data), [props.data])
@@ -52,7 +53,7 @@ const DisplayFavorite = (props) => {
 
     return (<div className={"row row-cols-3"}>
             <ErrorBoundary>
-        {toRender}
+                  {toRender}
             </ErrorBoundary>
     </div>)
 }
