@@ -1,18 +1,18 @@
 import React, {useState, useEffect} from 'react';
-import {useHistory} from "react-router-dom"
+import {useHistory} from "react-router-dom";
 
 const RecomendationCard=({recommendations,getImage})=>{
-    const [dataToRender,setDataToRender] = useState([])
-    const history = useHistory()
-    const MoreDetailHandler=(e,id)=>{history.push(`/movie_detail/${id}`)}
+    const [dataToRender,setDataToRender] = useState([]);
+    const history = useHistory();
+    const MoreDetailHandler=(e,id)=>{history.push(`/movie_detail/${id}`)};
 
     const toRender=(recommendations)=>{
-        let result=[]
+        let result=[];
         if(!recommendations) {
-            return
+            return;
         }else{
             result = recommendations.results.map((item,index)=>{
-            let itemId = item.id
+            let itemId = item.id;
             return(
                 <div className="col" key={index}>
                     <div className="card" style={{width: "9rem"}}>
@@ -26,9 +26,8 @@ const RecomendationCard=({recommendations,getImage})=>{
             )
         })
         }
-        setDataToRender([...result])
+        setDataToRender([...result]);
     }
-
 
     useEffect(()=>{toRender(recommendations)},[recommendations])
     return(

@@ -1,119 +1,120 @@
 import React, {useEffect, useState,Component} from "react";
 import Wrapper from "../../Engine/Wrapper";
 import {Validator} from "../../Engine/index";
-import {ErrorPage, Loading} from "../index";
+import {ErrorPage} from "../index";
 import {useHistory} from "react-router";
-import "./AuthStyles.css"
+import "./AuthStyles.css";
+
 class ErrorBoundary extends Component {
-    state = {ErrorExist: false}
-    componentDidCatch(error, errorInfo) {this.setState({ErrorExist: !this.state.ErrorExist})}
+    state = {ErrorExist: false};
+    componentDidCatch(error, errorInfo) {this.setState({ErrorExist: !this.state.ErrorExist})};
     render() {
-        if (this.state.ErrorExist) {return <ErrorPage/>}
+        if (this.state.ErrorExist) {return <ErrorPage/>};
         return this.props.children;
-    }
+    };
 }
 
 function Registration(props){
-    const [form,setForm] = useState({email:"",password:"",data:{city:"",phone:"",nick:""}})
-    const [disabled,setDisabled] = useState("disabled")
-    const [loading,setLoading] = useState(false)
-    const [error,setError] = useState(null)
-    const [success,setSuccess] = useState(null)
-    const validator = new Validator()
+    const [showAid,setShowAid] = useState(false);
+    const [form,setForm] = useState({email:"",password:"",city:"",phone:"",nick:""});
+    const [validationErrors,setValidationError] = useState({});
+    const [status,setStatus] = useState({loading:false,success:false});
+    const [counter,setCounter] = useState(6);
+    const validator = new Validator();
     const history=useHistory();
 
-    useEffect(()=>{
-        let result = validator.validateRegistartion(form);
-        if(Object.keys(result).length===0){setDisabled(null)
-        }else{setDisabled("disabled")}
-    },[form])
+    useEffect(()=>{validator.validate(form,setValidationError);},[form]);
 
-    const handleSubmit=(e)=>{
+    const handleSubmit=(e)=> {
         e.preventDefault();
-        setLoading(true)
-        const data = props.engine.request("https://yermolaiev-movie-db.herokuapp.com/api/registration","POST",form)
-        data.then((data)=>{
-            setLoading(false)
-            setError(null)
-            setSuccess({status:true,message:data.message,time:5})
+        setStatus({...status, loading: true});
+        setShowAid(true);
+        validator.validate(form,setValidationError);
+        if(Object.keys(validationErrors).length)return;
 
-            const promise = new Promise((resolve)=> {
-                    let timer;
-                    let timeout = setTimeout(()=>{
-                        timer = setInterval(()=>setSuccess({...success, time: success.time - 1}),1000)
-                    },5000)
-                clearInterval(timer);
-                clearTimeout(timeout)
-                    resolve()
-
-                }
-            )
-
-            promise.then((timer,timeout)=> {
-                history.push("/authentication")
+        props.engine.request("https://yermolaiev-movie-db.herokuapp.com/api/registration", "POST", form)
+            .then(() => {
+                setStatus({ success: true, loading: false});
             })
-        }).catch(err=>{
-            setLoading(false)
-            console.log(err)
-            setError(err)})
+            .catch(err => {
+                setValidationError(err);
+                setStatus({...status,  loading: false});
+            })
     }
 
-    if(success?.status){return(
+    if(status.success){
+            let interval = setInterval(()=> {
+                setCounter(()=>counter- 1);
+                if(counter===0){history.push("/authentication")};
+            },1000);
+            setTimeout(()=>clearInterval(interval),6000);
+        return(
         <>
-            <h1>{`${success?.message}`}</h1>
-            <h3>{`You will be redirected to login page via ${success.time} secconds...`}</h3>
-        </>) }
-    if(loading){return <Loading/>}
+            <h1>New user successfully created</h1>
+            <h3>{`You will be redirected to login page via ${counter} seconds...`}</h3>
+        </>)
+    }
     return(
+        <div id="auth-box">
+            <div className={`shadow-loading ${status.loading}`}>
+                <div className="lds-default">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div></div>
         <ErrorBoundary>
         <form>
             <fieldset>
                 <legend><h4 className={"text-secondary fw-bold"}>Registration new user</h4></legend>
                 <div className="form-group">
-                    <label htmlFor="exampleInputEmail1" className="form-label mt-4 fst-italic fs-7">Email address</label>
+                    <label htmlFor="Email" className="form-label mt-4 fst-italic fs-7">Email address</label>
                     <input type="email" className="form-control auth-input" id="exampleInputEmail1" aria-describedby="emailHelp"
                            placeholder="Enter email"  onChange={(e)=>setForm({...form,email:e.target.value})}/>
+                    <small className="auth-error text-danger fst-italic">{validationErrors?.email&&showAid?validationErrors.email:null}</small>
                 </div>
-
                 <div className="form-group">
-                    <label htmlFor="exampleInputPassword1" className="form-label mt-2 fst-italic fs-7">Password</label>
+                    <label htmlFor="Password" className="form-label mt-2 fst-italic fs-7">Password</label>
                     <input type="password" className="form-control auth-input" id="exampleInputPassword1" placeholder="Password"
                            onChange={(e)=>setForm({...form,password:e.target.value})}/>
-                    <small id="passHelp" className="form-text text-muted">Pay attention-only digits.</small>
+                    <small className="auth-error text-danger fst-italic">{validationErrors?.password&&showAid?validationErrors.password:null}</small>
                 </div>
-
-
                 <div className="form-group">
-                    <label htmlFor="inputDefault" className="col-form-label mt-2 fst-italic fs-7">Type your native city</label>
-                    <input type="text" className="form-control auth-input" placeholder="Where are you from" id="inputDefault"
-                           onChange={(e)=>setForm({...form,data: {...form.data, city:e.target.value}})}
+                    <label htmlFor="Default" className="col-form-label mt-2 fst-italic fs-7">Type your native city</label>
+                    <input type="text" className="form-control auth-input" placeholder="Where are you from" name="city_input"
+                           onChange={(e)=>setForm({...form,city:e.target.value})}
                     />
+                    <small className="auth-error text-danger fst-italic">{validationErrors?.city&&showAid?validationErrors.city:null}</small>
                 </div>
                 <div className="form-group">
                     <label className="col-form-label mt-2 fst-italic" htmlFor="inputDefault">Type your number</label>
-                    <input type="text" className="form-control auth-input" placeholder="Phone number" id="inputDefault"
-                           onChange={(e)=>setForm({...form,data: {...form.data,phone:e.target.value}})}
+                    <input type="text" className="form-control auth-input" placeholder="Phone number" name="phone_input"
+                           onChange={(e)=>setForm({...form,phone:e.target.value})}
                     />
-                    <small id="passHelp" className="form-text text-muted">Pay attention-start from +380.</small>
+                    <small className="auth-error text-danger fst-italic">{validationErrors?.phone&&showAid?validationErrors.phone:null}</small>
                 </div>
                 <div className="form-group">
                     <label className="col-form-label mt-2 fst-italic" htmlFor="inputDefault">Type your nickname</label>
-                    <input type="text" className="form-control auth-input" placeholder="Nickname" id="inputDefault"
-                           onChange={(e)=>setForm({...form,data: {...form.data,nick:e.target.value}})}/>
+                    <input type="text" className="form-control auth-input" placeholder="Nickname" name="nickname_input"
+                           onChange={(e)=>setForm({...form,nick:e.target.value})}/>
+                    <small className="auth-error text-danger fst-italic">{validationErrors?.nick&&showAid?validationErrors.nick:null}</small>
                 </div>
-                <button type="submit" className="btn btn-primary btn-registration mt-3" disabled={disabled} onClick={handleSubmit}>Register me!</button>
-                {error?
-                    <div className="alert alert-danger" role="alert">
-                        {error}
-                   </div>:null
-                }
-
+                <button type="submit" className="btn btn-primary btn-registration mt-3" onClick={handleSubmit}>Create account</button>
             </fieldset>
         </form>
-        </ErrorBoundary>
+     </ErrorBoundary>
+    </div>
        )
 }
 
-export default Wrapper()(Registration)
+export default Wrapper()(Registration);
 
 

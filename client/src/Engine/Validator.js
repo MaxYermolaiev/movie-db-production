@@ -1,40 +1,26 @@
 export default class Validator {
-    /*regexp for testing requiered fields
-        email:email@provider.com
-        password: only digits, min length 6
-        phone: +380...with length 9
-        string:string - min length 3
-     */
+    results = {};
     schema = {
-        email: /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+/,
-        password: /(?=.*[0-9]){6,}/g,
-        phone: /^\+380[0-9]{9}$/,
-        string: /[A-Za-z]{3,}/
+        email:/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[a-zA-Z0-9]+/,
+        password:/([a-zA-Z0-9]){6,}/g,
+        phone:/^\+380[0-9]{9}$/,
+        city:/[A-Za-z]{3,}/,
+        nick:/[A-Za-z,0-9]{4,}/
     }
-    //in results will be pushed testing of inputs, if list empty ok
-    #results = {}
-    validateLogin = (data) => {
-        if (data.length === 0) {
-            return this.#results.push({dataError: true})
+    test =(key,value)=> this.schema[key]?this.schema[key].test(value):this.schema.default.test(value);
+
+    validate=(props,resultsSetter)=>{
+        this.results = {};
+        for(let [key,value] of Object.entries(props)){
+                if(!this.test(key,value))this.results[key]=this.mistakesDescription[key];
         }
-        const email = this.schema.email.test(data.email);
-        const password = this.schema.password.test(data.password);
-        if (!email) {this.#results.email="email not correct"}
-        if (!password) {this.#results.password= "password not correct"}
-
-        return this.#results;
+        resultsSetter(this.results);
     }
-
-    validateRegistartion=(data)=>{
-        this.#results = {}
-        this.validateLogin(data)
-        let phone = this.schema.phone.test(data.data.phone);
-        let nick = this.schema.string.test(data.data.nick);
-        let city = this.schema.string.test(data.data.city);
-        if(!phone){this.#results.phone="phone not correct"}
-        if(!nick){this.#results.nick= "nick not correct"}
-        if(!city){this.#results.city= "city not correct"}
-        let result = this.#results;
-        return result;
+    mistakesDescription={
+        email:"Incorrect email, please check it...Example 'youremail@provider.com'",
+        password:"Password is not correct,use letters and digits. Minimum 6 symbols.",
+        nick:"Nickname must be longer 4 symbols, can contain letters and digits",
+        city:"City length must be more 2 letters",
+        phone:"Phone not correct, it should be like example - +380442233444"
     }
 }
