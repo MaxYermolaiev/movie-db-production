@@ -1,7 +1,7 @@
-import Wrapper from "./../../Engine/Wrapper"
-import GenresCategorie  from "./ItemList/Genres/DisplayGenres"
+import Wrapper from "./../../Engine/Wrapper";
+import GenresCategorie  from "./ItemList/Genres/DisplayGenres";
 import DisplayItems from "./ItemList/DisplayItemList";
-import ItemList from "./ItemList/ItemList"
+import ItemList from "./ItemList/ItemList";
 import MovieDetails from "./MovieItem/MovieDetails";
 import FetchFavorite from "./MyFavorite/FetchFavorite";
 

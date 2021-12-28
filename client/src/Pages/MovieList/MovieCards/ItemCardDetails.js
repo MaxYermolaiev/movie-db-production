@@ -1,7 +1,7 @@
 import React from 'react';
-import "./ItemCardDetails.css"
-const ItemCardDetails=({data})=>{
+import "./ItemCardDetails.css";
 
+const ItemCardDetails=({data})=>{
     return(
         <div>
             <div className="card card-head row mb-3 mt-3">

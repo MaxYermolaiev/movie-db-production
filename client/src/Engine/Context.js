@@ -1,4 +1,3 @@
-import React from 'react'
-const {Consumer,Provider} = React.createContext()
-//context provider, provider will defined in app, consumer in wrapper
+import React from 'react';
+const {Consumer,Provider} = React.createContext();
 export {Consumer,Provider};

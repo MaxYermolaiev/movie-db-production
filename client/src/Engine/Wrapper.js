@@ -7,14 +7,15 @@ const engine = new Engine()
 let Wrapper = (MethodsServise) => (Wraped)=> {
     return (props) => {
         return (
-            <Consumer>{(authMethods) => {
-                const methods = (MethodsServise) ? {...MethodsServise(engine),engine,...authMethods}:{...authMethods,engine}
-                return (<Wraped {...props} { ...methods}/>)
-            }}</Consumer>
+            <Consumer>
+                {(authMethods) => {
+                const methods = (MethodsServise) ? {...MethodsServise(engine),engine,...authMethods}:{...authMethods,engine};
+                return (<Wraped {...props} { ...methods}/>);
+                 }}
+            </Consumer>
         )
     }
 }
-
 
 export default Wrapper;
 

@@ -1,13 +1,12 @@
 import React,{useState,useEffect} from "react";
-import "./Button.css"
+import "./Button.css";
 import {ADD_MOVIE_TO_FAVORITE, DELETE_MOVIE_FROM_FAVORITE} from "../../../redux-store/action";
 import Wrapper from "../../../Engine/Wrapper";
 import {connect} from "react-redux";
 
 const Buttons = (props) => {
-
-    const {movie_data, removeFromFavorite, addToFavorite,token} = props
-    const [buttonState,setButtonState] = useState({add:"disabled",remove:"disabled"})
+    const {movie_data, removeFromFavorite, addToFavorite,token} = props;
+    const [buttonState,setButtonState] = useState({add:"disabled",remove:"disabled"});
     //render element depend on condition from store
     const find=(id)=>{
         let index=-1;
@@ -18,6 +17,7 @@ const Buttons = (props) => {
          }
         return index;
     }
+
     const changeButton = () =>{
         if(props.movies===undefined||props.movies===null)return;
         if(!token) {setButtonState({add:"disabled",remove:"disabled"})};
@@ -25,11 +25,10 @@ const Buttons = (props) => {
         if(idx>=0){setButtonState({add:"disabled",remove:""})
         }else{
             setButtonState({add:"",remove:"disabled"})}
-    }
+    };
     useEffect(()=>changeButton(),[props.movies])
 
-
-    //add favorite and switch button statoos
+    //add favorite and switch button status
     const actionsAdd=()=>{
           addToFavorite()
           setButtonState({add:"disabled",remove:""})
@@ -39,7 +38,7 @@ const Buttons = (props) => {
            removeFromFavorite()
            setButtonState({add:"",remove:"disabled"})
     }
-    //component render
+
     if(props.token) {
         return (
             <>
@@ -57,12 +56,12 @@ const Buttons = (props) => {
    ;
 
 };
-const mapStateToProps=({movies,loading,errors})=>{return {movies,loading,errors}}
+const mapStateToProps=({movies,loading,errors})=>{return {movies,loading,errors}};
 const mapDispatchToProps=(dispatch, ownProps)=>{
     const {token,engineRemoveFavorite,engineAddFavorite,movie_data} = ownProps;
     return{
         removeFromFavorite:()=>DELETE_MOVIE_FROM_FAVORITE(token,engineRemoveFavorite,dispatch,movie_data),
         addToFavorite:()=>ADD_MOVIE_TO_FAVORITE(token,engineAddFavorite,dispatch,movie_data)
-    }
-}
-export default Wrapper()(connect(mapStateToProps,mapDispatchToProps)(Buttons))
+    };
+};
+export default Wrapper()(connect(mapStateToProps,mapDispatchToProps)(Buttons));

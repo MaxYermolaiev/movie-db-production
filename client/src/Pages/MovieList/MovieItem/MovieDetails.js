@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {withRouter} from "react-router";
-import {Buttons, ErrorPage, Loading} from "../../index"
-import ItemCardDetails from "../MovieCards/ItemCardDetails"
+import {Buttons, ErrorPage, Loading} from "../../index";
+import ItemCardDetails from "../MovieCards/ItemCardDetails";
 import RecomendationCard from "../MovieCards/RecomendationCard";
 
 class ErrorBoundary extends Component {
@@ -16,31 +16,32 @@ class ErrorBoundary extends Component {
  class MovieDetails extends Component {
      state={id:null, recommendations:null,data:null, loading:false, error:false};
      componentDidMount(){
-         let id = this.getId()
-         this.setState({id:id,data:null,loading:true,error:false})
-         this.fetchData(id)
+         let id = this.getId();
+         this.setState({id:id,data:null,loading:true,error:false});
+         this.fetchData(id);
      }
      //mounting and fetch data depend on request type
      componentDidUpdate(prevProps, prevState, snapshot) {
          if(this.props.match.params.id!==prevProps.match.params.id){
-             this.fetchData(this.props.match.params.id)}}
+             this.fetchData(this.props.match.params.id);
+         }}
 
      componentDidCatch(error, errorInfo) {this.setState({error:!this.state.error})}
 
      onError=(err)=>{this.setState({...this.state, error:err})}
      getId=()=>{return this.props.match.params.id}
      fetchData=(id)=>{
-         let urls = [this.props.getData(id),this.props.getRecommendations(id)]
+         let urls = [this.props.getData(id),this.props.getRecommendations(id)];
          Promise.all(urls)
              .then(results=>{
                  results.forEach((item,index)=>{
                      if(index===0) {
-                         item.backdrop_path=this.props.getImage(item.poster_path)
-                         this.setState({data:item})
+                         item.backdrop_path=this.props.getImage(item.poster_path);
+                         this.setState({data:item});
                      }
                      if(index===1) {
                          item.results.forEach((el=>{
-                             this.setState({recommendations:item,loading:false})
+                             this.setState({recommendations:item,loading:false});
                          }))
                      }
                  })
@@ -66,4 +67,4 @@ class ErrorBoundary extends Component {
         )
     }
 }
-export default withRouter(MovieDetails)
+export default withRouter(MovieDetails);

@@ -1,8 +1,9 @@
 import React from "react";
-import ico from'./Loading.SVG'
+import ico from'./Loading.SVG';
+
 export default function Loading() {
 return(
-    <div>
+    <div className={'d-flex justify-content-center'}>
         <img src={ico} alt="error icon"/>
     </div>
 )

@@ -1,10 +1,9 @@
 import React from 'react';
 import {Switch, Route, Redirect, BrowserRouter} from 'react-router-dom';
-import {Header,Auth,Registration,SideBar,GenresCategories,SearchMovies,PopularMovies,GenresMovies,MovieDetail,ShowFavorite} from "./../Pages"
+import {AccountSettings,Header,Auth,Registration,SideBar,GenresCategories,SearchMovies,PopularMovies,GenresMovies,MovieDetail,ShowFavorite} from "./../Pages"
 const ApiRouter = (credentials) => {
-
    if (credentials) {
-       //depend from credentials return proper routing
+       //depend on credentials return proper routing
         return (
             <BrowserRouter>
                 <Header/>
@@ -13,7 +12,7 @@ const ApiRouter = (credentials) => {
                     <div className="col-3">
                         <SideBar credentials={credentials}/>
                     </div>
-                    <div className="col-9">
+                    <div className="col-9 right_bar">
                         <Route path="/movie_detail/:id" exact render={MovieDetail}/>
                         <Route path='/random_movie/:id' exact render={MovieDetail}/>
                         <Route path='/genres' exact render={GenresCategories}/>
@@ -21,6 +20,7 @@ const ApiRouter = (credentials) => {
                         <Route path='/search/:page/:id' exact render={SearchMovies}/>
                         <Route path='/popular/:page' exact render={PopularMovies}/>
                         <Route path='/favorite' exact render={ShowFavorite}/>
+                        <Route path='/settings' exact render={AccountSettings}/>
                         <Redirect to="/popular/1"/>
                     </div>
                 </div>
@@ -28,7 +28,6 @@ const ApiRouter = (credentials) => {
             </BrowserRouter>
         )
     } else {
-        //else restricted list of routes
         return (
             <BrowserRouter>
                 <Header/>
@@ -58,25 +57,3 @@ const ApiRouter = (credentials) => {
     }
 }
 export default ApiRouter;
-/*
-<Route path='/genres' exact render={DisplayGenresCategories}/>
-
-
-                            <Redirect to="/popular/1"/>
-
-                            <Route path='/random_movie/:id' exact render={MovieById}/>
-                        <Route path='/favorite/:page' exact render={FavoriteItemsList}/>
-                        <Route path="/movie_detail/:id" exact render={getMovieById}/>
-
-
-                                               <Route path='/genre/:page/:id' exact render={GenresItemsList}/>
-                            <Route path='/popular/:page' exact render={PopularItemList}/>
-                            <Route path='/search/:page/:id' exact render={SearchItemList}/>
-
-                                                    <Route path='/genres' exact render={DisplayGenresCategories}/>
-
-                        <Route path='/genre/:page/:id' exact render={GenresItemsList}/>
-                        <Route path='/popular/:page' exact render={PopularItemList}/>
-                        <Route path='/search/:page/:id' exact render={SearchItemList}/>
-
-*/
