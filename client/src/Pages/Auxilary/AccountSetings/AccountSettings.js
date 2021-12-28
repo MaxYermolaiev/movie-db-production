@@ -5,10 +5,13 @@ import {connect} from "react-redux";
 import AccountImage from "./../AccountImage/AccountImage";
 
 const RenderPersonalData=({data})=>{
-    let results = Object.entries(data).map((itm,idx)=>{
-        return (<div key={idx}>{itm[0]}:{itm[1]}</div>);
-    });
-    return (<>{results}</>);
+    if(data){
+        let results = Object.entries(data).map((itm,idx)=>{
+            return (<div key={idx}>{itm[0]}:{itm[1]}</div>);
+        });
+        return (<>{results}</>);
+    }
+    return(<>Personal data is missing</>)
 }
 const ChangePersonalData=({data})=>{
     return (<>
