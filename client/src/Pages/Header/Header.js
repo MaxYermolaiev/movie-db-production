@@ -107,7 +107,7 @@ const Header=(props)=>{
                                     <div className={'header_small_image'}>
                                     <AccountImage/>
                                     </div>
-                                    <div className={'d-flex align-items-center header_settings greeting'}><i>{`Hi, ${props.user.nick}!`}</i></div>
+                                    <div className={'d-flex align-items-center header_settings greeting'}><i>{`Hi, ${props?.user?.nick}!`}</i></div>
                                     <div className={'d-flex align-items-center header_settings'}>Settings
                                     <div className={'header_settings-list'}>
                                         <div onClick={(e)=>history.push("/favorite")}>Favorite</div>

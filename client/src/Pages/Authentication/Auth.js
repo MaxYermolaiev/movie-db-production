@@ -31,8 +31,9 @@ const Auth=(props)=>{
         validator.validate(form,setValidationError);
         if(Object.keys(validationErrors).length)return;
 
-        props.engine.request("http://localhost:5000/api/login","POST",form,{})
+        props.engine.request("https://yermolaiev-movie-db.herokuapp.com/api/login","POST",form,{})
         .then(data=>{
+            console.log(data)
             props.setUserData(data.user_data);
             props.login(data.jwt,data.id);
             history.push("/popular/1");

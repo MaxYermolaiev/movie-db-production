@@ -32,7 +32,7 @@ function Registration(props){
         validator.validate(form,setValidationError);
         if(Object.keys(validationErrors).length)return;
 
-        props.engine.request("http://localhost:5000/api/registration", "POST", form)
+        props.engine.request("https://yermolaiev-movie-db.herokuapp.com/api/registration", "POST", form)
             .then(() => {
                 setStatus({ success: true, loading: false});
             })
